@@ -1,0 +1,151 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int playerEnergy = 100;
+        int enemyEnergy = 100;
+        int playerHealth = 100;
+        int enemyHealth = 100;
+        int action = -1;
+        int enemyAction = -1;
+        string actionString = string.Empty;
+        Random rnd = new Random();
+        while (true)
+        {
+            Console.WriteLine($"           ХП:  {playerHealth}                    ХП вируса: {enemyHealth}");
+            Console.WriteLine($"Энергия:  {playerEnergy}          Энергия вируса: {enemyEnergy}");
+
+            if (playerHealth <= 0)
+            {
+                Console.WriteLine("Ты проиграл!");
+                break;
+            }
+            if (enemyHealth <= 0)
+            {
+                Console.WriteLine("Ты выиграл!");
+                break;
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            Console.WriteLine("1. Почистить папку temp (20 урона, -10 энергии)");
+
+            Console.WriteLine("2. Использовать антивирус (35 урона, -40 энергии)");
+
+            Console.WriteLine("3. Выпить кофе ( +20 энергии)");
+
+            Console.WriteLine("4. Заказать пиццу (+30 хп, -20 энергии)");
+
+            bool success = int.TryParse(Console.ReadLine(), out action);
+            if (success)
+            {
+                actionString = action.ToString();
+            }
+            else
+            {
+                Console.WriteLine("Вы пропустили ход.");
+            }
+                if (action == 1)
+                {
+                    if (playerEnergy >= 10)
+                    {
+                        enemyHealth -= 20;
+                        playerEnergy -= 10;
+                        Console.WriteLine("Вы нанесли 20 урона.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Недостаточно энергии. Ты пропустил ход!");
+                    }
+                }
+                if (action == 2)
+                {
+                    if (playerEnergy >= 40)
+                    {
+                        enemyHealth -= 35;
+                        playerEnergy -= 40;
+                        Console.WriteLine("Вы нанесли 35 урона.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Недостаточно энергии. Ты пропустил ход!");
+                    }
+                }
+                if (action == 3)
+                {
+                    playerEnergy += 20;
+                    Console.WriteLine("Вы выпили чашку кофе. +20 энергии.");
+                }
+                if (action == 4)
+                {
+                    if (playerEnergy >= 20)
+                    {
+                        playerHealth += 30;
+                        Console.WriteLine("Пицца была очень вкусная. +30хп.");
+                    }
+                    else Console.WriteLine("Недостаточно энергии. Ты пропустил ход!");
+                }
+
+                enemyAction = rnd.Next(1, 4);
+                if (enemyEnergy <= 40)
+                {
+                    enemyAction = 3;
+                }
+                if (enemyHealth <= 30)
+                {
+                    enemyAction = 4;
+                }
+                if (enemyAction == 1)
+                {
+                    if (enemyEnergy >= 10)
+                    {
+                        playerHealth -= 20;
+                        enemyEnergy -= 10;
+                        Console.WriteLine("Вы получили 20 урона!");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        Console.WriteLine("У вируса недостаточно энергии");
+                    }
+                }
+                if (enemyAction == 2)
+                {
+                    if (enemyEnergy >= 40)
+                    {
+                        playerHealth -= 30;
+                        enemyEnergy -= 40;
+                        Console.WriteLine("Вы получили 30 урона!");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        Console.WriteLine("У вируса недостаточно энергии!");
+                    }
+                }
+                if (enemyAction == 3)
+                {
+                    enemyEnergy += 20;
+                    Console.WriteLine("Вирус зашел в интернет и получил 20 энергии!");
+                    Console.WriteLine("");
+                }
+                if (enemyAction == 4)
+                {
+                    if (enemyEnergy >= 20)
+                    {
+                        enemyHealth += 20;
+                        Console.WriteLine("Вирус покинул карантин и получил 30 хп!");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        Console.WriteLine("У вируса недостаточно энергии!");
+                    }
+                }
+            }
+            Console.ReadLine();
+        }
+    }
